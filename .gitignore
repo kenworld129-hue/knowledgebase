@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Env files
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Logs
+*.log
+tmp/
+
+#=== Frontend (Next.js) ===#
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel/
+
+#=== Backend (Rust) ===#
+backend/target/
+backend/.env
+backend/.env.local
+backend/.sqlx/
+
+# VSCode
+.vscode/
+*.code-workspace
+
