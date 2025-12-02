@@ -3,11 +3,15 @@ import { createIncident, Incident } from "../../lib/api";
 
 export default function NewIncidentPage() {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const incident: Incident = { title };
+    const incident: Incident = {
+      title,
+      description,
+    };
     try {
       const result = await createIncident(incident);
       setMessage(`Incident created with ID: ${result.id}`);
@@ -29,6 +33,11 @@ export default function NewIncidentPage() {
           placeholder="Title"
           value={title}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <button type="submit">Create</button>
       </form>
