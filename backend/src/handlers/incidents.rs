@@ -9,6 +9,7 @@ pub async fn create_incident(
     Json(payload): Json<Incident>,
     pool: PgPool,
 ) -> impl IntoResponse {
+    println!("📥 Received payload: {:?}", payload);
     let result = sqlx::query!(
         r#"
         INSERT INTO incidents (title, description, root_cause, resolution, system_name, occurred_at, resolved_at, severity, created_by)

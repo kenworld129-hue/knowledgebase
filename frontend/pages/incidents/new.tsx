@@ -4,6 +4,8 @@ import { createIncident, Incident } from "../../lib/api";
 export default function NewIncidentPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [severity, setSeverity] = useState("low"); // low, medium, high など
+  const [occurred_at, setOccurred_at] = useState(""); // ISO 日付文字列
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -11,6 +13,8 @@ export default function NewIncidentPage() {
     const incident: Incident = {
       title,
       description,
+      severity,
+      occurred_at,
     };
     try {
       const result = await createIncident(incident);
@@ -38,6 +42,16 @@ export default function NewIncidentPage() {
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+        />
+        <select value={severity} onChange={(e) => setSeverity(e.target.value)}>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <input
+          type="datetime-local"
+          value={occurred_at}
+          onChange={(e) => setOccurred_at(e.target.value)}
         />
         <button type="submit">Create</button>
       </form>
