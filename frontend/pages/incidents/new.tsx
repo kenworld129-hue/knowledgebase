@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createIncident, Incident } from "../../lib/api";
+import { createIncident, PostIncident } from "../../lib/api";
 
 export default function NewIncidentPage() {
   const [title, setTitle] = useState("");
@@ -10,7 +10,7 @@ export default function NewIncidentPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const incident: Incident = {
+    const incident: PostIncident = {
       title,
       description,
       severity,
