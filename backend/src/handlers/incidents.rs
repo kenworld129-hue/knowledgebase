@@ -1,13 +1,61 @@
-use axum::{http::StatusCode, response::IntoResponse, Json};
+use axum::{extract::{Path, State, Query}, http::StatusCode, response::IntoResponse, Json};
+use std::collections::HashMap;
 use serde_json::json;
 use sqlx::PgPool;
 
-// use crate::models::incident::{Incident, NewIncident};
 use crate::models::incident::Incident;
 
+// インシデント一覧取得（ページネーション対応）
+pub async fn list_incidents(
+    State(pool): State<PgPool>,
+    Query(params): Query<HashMap<String, String>>,
+) -> Result<Json<Vec<Incident>>, StatusCode> {
+    let page: i64 = params.get("page").and_then(|v| v.parse().ok()).unwrap_or(1);
+    let per_page: i64 = 20;
+    let offset = (page - 1) * per_page;
+
+    let incidents = sqlx::query_as!(
+        Incident,
+        r#"
+        SELECT id, title, description, root_cause, resolution, system_name, occurred_at, resolved_at, severity, created_by
+        FROM incidents
+        ORDER BY id DESC
+        LIMIT $1 OFFSET $2
+        "#,
+        per_page,
+        offset
+    )
+    .fetch_all(&pool)
+    .await
+    .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    Ok(Json(incidents))
+}
+
+// インシデント詳細取得
+pub async fn get_incident(
+    Path(id): Path<i32>,
+    State(pool): State<PgPool>,
+) -> Result<Json<Incident>, StatusCode> {
+    let incident = sqlx::query_as!(
+        Incident,
+        r#"
+        SELECT id, title, description, root_cause, resolution, system_name, occurred_at, resolved_at, severity, created_by
+        FROM incidents
+        WHERE id = $1
+        "#,
+        id
+    )
+    .fetch_one(&pool)
+    .await
+    .map_err(|_| StatusCode::NOT_FOUND)?;
+
+    Ok(Json(incident))
+}
+
 pub async fn create_incident(
+    State(pool): State<PgPool>,
     Json(payload): Json<Incident>,
-    pool: PgPool,
 ) -> impl IntoResponse {
     println!("📥 Received payload: {:?}", payload);
     let result = sqlx::query!(

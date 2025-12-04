@@ -21,7 +21,7 @@ async fn main() {
         .allow_headers(Any);    
 
     let app = Router::new()
-        .merge(routes::incidents::incident_routes(pool.clone()))
+        .nest("/api", routes::incidents::incident_routes(pool.clone()))
         .layer(cors);
     
     let addr = SocketAddr::from(([127, 0, 0, 1], 8000));

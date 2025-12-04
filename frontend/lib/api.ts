@@ -27,7 +27,7 @@ export async function createIncident(incident: PostIncident) {
     ...incident,
   };
 
-  const res = await fetch("http://localhost:8000/incidents", {
+  const res = await fetch("http://localhost:8000/api/incidents", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,13 +43,13 @@ export async function createIncident(incident: PostIncident) {
 }
 
 export async function fetchIncidents(page: number = 1): Promise<GetIncident[]> {
-  const res = await fetch(`/api/incidents?page=${page}`);
+  const res = await fetch(`http://localhost:8000/api/incidents?page=${page}`);
   if (!res.ok) throw new Error('Failed to fetch incidents');
   return res.json();
 }
 
 export async function fetchIncidentDetail(id: number): Promise<GetIncident> {
-  const res = await fetch(`/api/incidents/${id}`);
+  const res = await fetch(`http://localhost:8000/api/incidents/${id}`);
   if (!res.ok) throw new Error('Failed to fetch incident detail');
   return res.json();
 }
