@@ -1,28 +1,32 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { login, LoginRequest } from "../lib/api";
+
 
 export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const res = await fetch("http://localhost:3001/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!res.ok) {
-      alert("ログイン失敗");
-      return;
+    const body: LoginRequest = {
+      username,
+      password,
+    };
+    try {
+      const result = await login(body);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            setMessage(err.message);
+        } else {
+            setMessage(String(err));
+        }
     }
 
-    const data = await res.json();
-    localStorage.setItem("token", data.token);
 
     router.push("/incidents"); // ログイン後一覧へ
   };

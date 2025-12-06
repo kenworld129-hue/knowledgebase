@@ -1,8 +1,8 @@
-use axum::{Json, http::StatusCode};
+use axum::{extract::{Path, State, Query}, http::StatusCode, response::IntoResponse, Json};
 use serde::Deserialize;
 use sqlx::PgPool;
 use bcrypt::verify;
-use crate::auth::create_jwt;
+use crate::auth::jwt::create_jwt;
 
 #[derive(Deserialize)]
 pub struct LoginRequest {

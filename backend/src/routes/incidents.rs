@@ -1,4 +1,4 @@
-use axum::{routing::get, Router};  // ← Json を追加
+use axum::{routing::get, Router};
 use sqlx::PgPool;
 
 use crate::handlers::incidents::{list_incidents, get_incident, create_incident};

@@ -22,6 +22,11 @@ export interface PostIncident {
   created_by?: number;
 }
 
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
 export async function createIncident(incident: PostIncident) {
   const payload = {
     ...incident,
@@ -42,8 +47,26 @@ export async function createIncident(incident: PostIncident) {
   return res.json();
 }
 
-export async function login() {
-  
+export async function login(body: LoginRequest) {
+  const payload = {
+    ...body,
+  };
+
+  const res = await fetch("http://localhost:8000/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ payload }),
+  });
+
+  if (!res.ok) {
+    alert("ログイン失敗");
+    return;
+  }
+
+  const data = await res.json();
+  localStorage.setItem("token", data.token);
+
+  return res.json();
 }
 
 export async function fetchIncidents(page: number = 1): Promise<GetIncident[]> {
