@@ -42,6 +42,10 @@ export async function createIncident(incident: PostIncident) {
   return res.json();
 }
 
+export async function login() {
+  
+}
+
 export async function fetchIncidents(page: number = 1): Promise<GetIncident[]> {
   const res = await fetch(`http://localhost:8000/api/incidents?page=${page}`);
   if (!res.ok) throw new Error('Failed to fetch incidents');
