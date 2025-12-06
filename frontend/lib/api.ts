@@ -34,7 +34,7 @@ export async function createIncident(incident: PostIncident) {
     },
     body: JSON.stringify(payload),
   });
-  console.log("payload = ", JSON.stringify(payload));
+  console.log("payload = ", JSON.stringify(payload)); //debug
   if (!res.ok) {
     console.log("payload = ", JSON.stringify(payload));
     throw new Error(`Failed to create incident: ${res.statusText}`);

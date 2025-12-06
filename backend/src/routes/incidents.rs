@@ -1,8 +1,7 @@
-use axum::{routing::get, routing::post, Router, Json};  // ← Json を追加
+use axum::{routing::get, Router};  // ← Json を追加
 use sqlx::PgPool;
 
 use crate::handlers::incidents::{list_incidents, get_incident, create_incident};
-use crate::models::incident::Incident;
 
 pub fn incident_routes(pool: PgPool) -> Router {
     Router::new()
