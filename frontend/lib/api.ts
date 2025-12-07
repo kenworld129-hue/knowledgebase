@@ -35,6 +35,7 @@ export async function createIncident(incident: PostIncident) {
   const res = await fetch("http://localhost:8000/api/incidents", {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
@@ -52,9 +53,12 @@ export async function login(body: LoginRequest) {
     ...body,
   };
 
-  const res = await fetch("http://localhost:8000/api/login", {
+  const res = await fetch("http://localhost:8000/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ payload }),
   });
 
@@ -66,17 +70,25 @@ export async function login(body: LoginRequest) {
   const data = await res.json();
   localStorage.setItem("token", data.token);
 
-  return res.json();
+  return data;
 }
 
 export async function fetchIncidents(page: number = 1): Promise<GetIncident[]> {
-  const res = await fetch(`http://localhost:8000/api/incidents?page=${page}`);
+  const res = await fetch(`http://localhost:8000/api/incidents?page=${page}`,{
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }
+  });
   if (!res.ok) throw new Error('Failed to fetch incidents');
   return res.json();
 }
 
 export async function fetchIncidentDetail(id: number): Promise<GetIncident> {
-  const res = await fetch(`http://localhost:8000/api/incidents/${id}`);
+  const res = await fetch(`http://localhost:8000/api/incidents/${id}`,{
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }
+  });
   if (!res.ok) throw new Error('Failed to fetch incident detail');
   return res.json();
 }

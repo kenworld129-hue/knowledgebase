@@ -4,13 +4,15 @@ use axum::{
     http::Request,
     middleware::Next,
     response::Response,
+    body::Body
 };
 use jsonwebtoken::{DecodingKey, Validation};
+use crate::auth::jwt::{Claims};
 
-pub async fn require_jwt<B>(
+pub async fn require_jwt(
     State(secret): State<String>,
-    req: Request<B>,
-    next: Next<B>,
+    req: Request<Body>,
+    next: Next,
 ) -> Result<Response, StatusCode> {
     let auth = req.headers().get("Authorization")
         .and_then(|h| h.to_str().ok())
