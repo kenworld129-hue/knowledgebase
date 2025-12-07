@@ -1,5 +1,5 @@
 use axum::{
-    extract::{Path, State, Query},
+    extract::{State},
     http::StatusCode,
     http::Request,
     middleware::Next,
@@ -8,12 +8,16 @@ use axum::{
 };
 use jsonwebtoken::{DecodingKey, Validation};
 use crate::auth::jwt::{Claims};
+use crate::routes::auth::AppState;
+
 
 pub async fn require_jwt(
-    State(secret): State<String>,
+    // State(secret): State<String>,
+    State(state): State<AppState>,
     req: Request<Body>,
     next: Next,
 ) -> Result<Response, StatusCode> {
+    let secret = &state.secret;
     let auth = req.headers().get("Authorization")
         .and_then(|h| h.to_str().ok())
         .unwrap_or("");

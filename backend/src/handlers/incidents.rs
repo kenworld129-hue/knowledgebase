@@ -4,12 +4,14 @@ use serde_json::json;
 use sqlx::PgPool;
 
 use crate::models::incident::Incident;
+use crate::routes::auth::AppState;
 
 // インシデント一覧取得（ページネーション対応）
 pub async fn list_incidents(
-    State(pool): State<PgPool>,
+    State(state): State<AppState>,
     Query(params): Query<HashMap<String, String>>,
 ) -> Result<Json<Vec<Incident>>, StatusCode> {
+    let pool = &state.pool;
     let page: i64 = params.get("page").and_then(|v| v.parse().ok()).unwrap_or(1);
     let per_page: i64 = 20;
     let offset = (page - 1) * per_page;
@@ -25,7 +27,7 @@ pub async fn list_incidents(
         per_page,
         offset
     )
-    .fetch_all(&pool)
+    .fetch_all(pool)
     .await
     .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
 
