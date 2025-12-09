@@ -1,7 +1,6 @@
 use axum::{extract::{Path, State, Query}, http::StatusCode, response::IntoResponse, Json};
 use std::collections::HashMap;
 use serde_json::json;
-use sqlx::PgPool;
 
 use crate::models::incident::Incident;
 use crate::routes::auth::AppState;
@@ -37,7 +36,7 @@ pub async fn list_incidents(
 // インシデント詳細取得
 pub async fn get_incident(
     Path(id): Path<i32>,
-    State(pool): State<PgPool>,
+    State(state): State<AppState>,
 ) -> Result<Json<Incident>, StatusCode> {
     let incident = sqlx::query_as!(
         Incident,
@@ -48,7 +47,7 @@ pub async fn get_incident(
         "#,
         id
     )
-    .fetch_one(&pool)
+    .fetch_one(&state.pool)
     .await
     .map_err(|_| StatusCode::NOT_FOUND)?;
 
@@ -56,7 +55,7 @@ pub async fn get_incident(
 }
 
 pub async fn create_incident(
-    State(pool): State<PgPool>,
+    State(state): State<AppState>,
     Json(payload): Json<Incident>,
 ) -> impl IntoResponse {
     println!("📥 Received payload: {:?}", payload);
@@ -76,7 +75,7 @@ pub async fn create_incident(
         payload.severity,
         payload.created_by
     )
-    .fetch_one(&pool)
+    .fetch_one(&state.pool)
     .await;
 
     match result {

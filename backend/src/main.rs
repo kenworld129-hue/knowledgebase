@@ -26,7 +26,7 @@ async fn main() {
         .allow_headers(Any);    
 
     let app = Router::new()
-        .nest("/api", routes::incidents::incident_routes(pool.clone()))
+        .nest("/api", routes::incidents::incident_routes(pool.clone(), secret.clone()))
         .nest("/auth", routes::auth::login_routes(pool.clone(), secret))
         .layer(cors);
     
