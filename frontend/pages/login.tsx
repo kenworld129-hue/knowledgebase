@@ -13,22 +13,13 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const body: LoginRequest = {
-      username,
-      password,
-    };
+    const body: LoginRequest = { username, password };
     try {
-      const result = await login(body);
+      await login(body);
+      router.push("/incidents");
     } catch (err: unknown) {
-        if (err instanceof Error) {
-            setMessage(err.message);
-        } else {
-            setMessage(String(err));
-        }
+      setMessage(err instanceof Error ? err.message : String(err));
     }
-
-
-    router.push("/incidents"); // ログイン後一覧へ
   };
 
   return (
@@ -43,7 +34,6 @@ export default function LoginPage() {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-
         <div>
           <input
             type="password"
@@ -52,9 +42,9 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
         <button type="submit">ログイン</button>
       </form>
+      {message && <p style={{ color: "red" }}>{message}</p>}
     </div>
   );
 }

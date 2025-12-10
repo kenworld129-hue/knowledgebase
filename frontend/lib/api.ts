@@ -49,22 +49,16 @@ export async function createIncident(incident: PostIncident) {
 }
 
 export async function login(body: LoginRequest) {
-  const payload = {
-    ...body,
-  };
-
   const res = await fetch("http://localhost:8000/auth/login", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ payload }),
+    body: JSON.stringify(body),
   });
 
   if (!res.ok) {
-    alert("ログイン失敗");
-    return;
+    throw new Error("ログイン失敗");
   }
 
   const data = await res.json();
