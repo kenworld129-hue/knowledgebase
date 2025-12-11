@@ -9,6 +9,8 @@ export interface GetIncident {
   resolved_at?: string;
   severity?: string;
   created_by?: number;
+  created_at?: string;
+  updated_at?: string;
 }
 export interface PostIncident {
   title: string;

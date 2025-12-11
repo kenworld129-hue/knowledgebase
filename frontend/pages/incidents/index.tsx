@@ -97,9 +97,9 @@ export default function IncidentList() {
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#1e40af';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 4px 12px rgba(32, 178, 170, 0.3)';
+                e.currentTarget.style.backgroundColor = '#1e40af';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(32, 178, 170, 0.3)';
                 // メタリック光沢効果
                 const shine = document.createElement('div');
                 shine.style.cssText = `
@@ -111,14 +111,14 @@ export default function IncidentList() {
                   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
                   transition: left 0.5s ease;
                 `;
-                e.target.appendChild(shine);
+                e.currentTarget.appendChild(shine);
                 setTimeout(() => shine.style.left = '100%', 10);
-                setTimeout(() => e.target.removeChild(shine), 500);
+                setTimeout(() => e.currentTarget.removeChild(shine), 500);
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#1e3a8a';
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                e.currentTarget.style.backgroundColor = '#1e3a8a';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
               }}
             >
               ➕ 新規作成
@@ -152,7 +152,7 @@ export default function IncidentList() {
               gap: '1rem'
             }}>
               {incidents.map((inc) => {
-                const severityColors = getSeverityColor(inc.severity);
+                const severityColors = getSeverityColor(inc.severity || '');
                 return (
                   <div
                     key={inc.id}
@@ -231,11 +231,11 @@ export default function IncidentList() {
                           transition: left 0.4s ease;
                           pointer-events: none;
                         `;
-                        e.target.appendChild(shine);
+                        e.currentTarget.appendChild(shine);
                         setTimeout(() => shine.style.left = '100%', 10);
                         setTimeout(() => {
-                          if (e.target && e.target.contains(shine)) {
-                            e.target.removeChild(shine);
+                          if (e.currentTarget && e.currentTarget.contains(shine)) {
+                            e.currentTarget.removeChild(shine);
                           }
                         }, 400);
                       }}
@@ -272,7 +272,7 @@ export default function IncidentList() {
                           gap: '0.25rem',
                           whiteSpace: 'nowrap'
                         }}>
-                          {getSeverityIcon(inc.severity)}
+                          {getSeverityIcon(inc.severity || '')}
                           {inc.severity || 'Unknown'}
                         </div>
                       </div>
@@ -349,8 +349,8 @@ export default function IncidentList() {
               overflow: 'hidden'
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#5a6268';
-              e.target.style.transform = 'scale(1.05)';
+              e.currentTarget.style.backgroundColor = '#5a6268';
+              e.currentTarget.style.transform = 'scale(1.05)';
               // メタリック光沢効果
               const shine = document.createElement('div');
               shine.style.cssText = `
@@ -363,17 +363,17 @@ export default function IncidentList() {
                 transition: left 0.4s ease;
                 pointer-events: none;
               `;
-              e.target.appendChild(shine);
+              e.currentTarget.appendChild(shine);
               setTimeout(() => shine.style.left = '100%', 10);
               setTimeout(() => {
-                if (e.target && e.target.contains(shine)) {
-                  e.target.removeChild(shine);
+                if (e.currentTarget && e.currentTarget.contains(shine)) {
+                  e.currentTarget.removeChild(shine);
                 }
               }, 400);
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#6c757d';
-              e.target.style.transform = 'scale(1)';
+              e.currentTarget.style.backgroundColor = '#6c757d';
+              e.currentTarget.style.transform = 'scale(1)';
             }}
           >
             次へ →
