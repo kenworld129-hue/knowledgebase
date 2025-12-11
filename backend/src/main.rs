@@ -4,6 +4,7 @@ use dotenvy::dotenv;
 use std::env;
 use std::net::SocketAddr;
 use tower_http::cors::{Any, CorsLayer};
+use axum::http::{Method, HeaderName};
 
 mod db;
 mod handlers;
@@ -21,16 +22,23 @@ async fn main() {
         .expect("JWT_SECRET must be set");
 
     let cors = CorsLayer::new()
-        .allow_origin(Any)
-        .allow_methods(Any)
-        .allow_headers(Any);    
+        .allow_origin([
+            "http://localhost:3000".parse().unwrap(),
+            "http://118.27.109.133:3000".parse().unwrap(),
+        ])
+        .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE, Method::OPTIONS])
+        .allow_headers([
+            HeaderName::from_static("content-type"),
+            HeaderName::from_static("authorization"),
+        ])
+        .allow_credentials(true);    
 
     let app = Router::new()
         .nest("/api", routes::incidents::incident_routes(pool.clone(), secret.clone()))
         .nest("/auth", routes::auth::login_routes(pool.clone(), secret))
         .layer(cors);
     
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8000));
     println!("Server running at http://{}", addr);
 
     axum::serve(

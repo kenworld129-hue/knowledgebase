@@ -29,12 +29,14 @@ export interface LoginRequest {
   password: string;
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export async function createIncident(incident: PostIncident) {
   const payload = {
     ...incident,
   };
 
-  const res = await fetch("http://localhost:8000/api/incidents", {
+  const res = await fetch(`${API_BASE_URL}/api/incidents`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -51,7 +53,7 @@ export async function createIncident(incident: PostIncident) {
 }
 
 export async function login(body: LoginRequest) {
-  const res = await fetch("http://localhost:8000/auth/login", {
+  const res = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -70,7 +72,7 @@ export async function login(body: LoginRequest) {
 }
 
 export async function fetchIncidents(page: number = 1): Promise<GetIncident[]> {
-  const res = await fetch(`http://localhost:8000/api/incidents?page=${page}`,{
+  const res = await fetch(`${API_BASE_URL}/api/incidents?page=${page}`,{
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     }
@@ -80,7 +82,7 @@ export async function fetchIncidents(page: number = 1): Promise<GetIncident[]> {
 }
 
 export async function fetchIncidentDetail(id: number): Promise<GetIncident> {
-  const res = await fetch(`http://localhost:8000/api/incidents/${id}`,{
+  const res = await fetch(`${API_BASE_URL}/api/incidents/${id}`,{
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     }
