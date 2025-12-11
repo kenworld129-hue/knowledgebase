@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createIncident, PostIncident } from "../../lib/api";
 import { useRouter } from "next/navigation";
+import { theme, layoutStyles, cardStyles, buttonStyles, addShineEffect } from "../../lib/theme";
 
 export default function NewIncidentPage() {
   const [title, setTitle] = useState("");
@@ -31,129 +32,186 @@ export default function NewIncidentPage() {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => router.push('/incidents')}
-        style={{
-          padding: '0.5rem 1rem',
-          backgroundColor: '#6c757d',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          marginBottom: '1rem'
-        }}
-      >
-        ← 一覧に戻る
-      </button>
+    <div style={layoutStyles.page}>
+      <div style={layoutStyles.header}>
+        <h1 style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          margin: 0
+        }}>
+          🗂 KnowledgeBase
+        </h1>
+      </div>
       
-      <h1>➕ 新しいインシデントを作成</h1>
-      
-      <form onSubmit={handleSubmit} style={{ marginTop: '2rem' }}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-            タイトル *
-          </label>
-          <input
-            type="text"
-            placeholder="インシデントのタイトルを入力"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #ccc',
-              borderRadius: '4px'
-            }}
-            required
-          />
-        </div>
-        
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-            詳細説明
-          </label>
-          <textarea
-            placeholder="インシデントの詳細を記述"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              minHeight: '120px',
-              resize: 'vertical'
-            }}
-          />
-        </div>
-        
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-            重要度
-          </label>
-          <select 
-            value={severity} 
-            onChange={(e) => setSeverity(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #ccc',
-              borderRadius: '4px'
-            }}
-          >
+      <div style={layoutStyles.container}>
+        <div style={cardStyles.default}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h1 style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              color: theme.colors.textPrimary,
+              margin: 0
+            }}>➕ 新しいインシデントを作成</h1>
+            
+            <button
+              onClick={() => router.push('/incidents')}
+              style={{
+                ...buttonStyles.secondary,
+                padding: '0.5rem 1rem'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme.colors.primaryHover;
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                addShineEffect(e.currentTarget);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = theme.colors.primary;
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              ← 一覧に戻る
+            </button>
+          </div>
+          
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '500',
+                color: theme.colors.textPrimary
+              }}>
+                タイトル *
+              </label>
+              <input
+                type="text"
+                placeholder="インシデントのタイトルを入力"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: `1px solid ${theme.colors.border}`,
+                  borderRadius: theme.borderRadius.small,
+                  backgroundColor: theme.colors.background,
+                  fontSize: '1rem'
+                }}
+                required
+              />
+            </div>
+            
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '500',
+                color: theme.colors.textPrimary
+              }}>
+                詳細説明
+              </label>
+              <textarea
+                placeholder="インシデントの詳細を記述"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: `1px solid ${theme.colors.border}`,
+                  borderRadius: theme.borderRadius.small,
+                  backgroundColor: theme.colors.background,
+                  minHeight: '120px',
+                  resize: 'vertical',
+                  fontSize: '1rem',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+            
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '500',
+                color: theme.colors.textPrimary
+              }}>
+                重要度
+              </label>
+              <select 
+                value={severity} 
+                onChange={(e) => setSeverity(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: `1px solid ${theme.colors.border}`,
+                  borderRadius: theme.borderRadius.small,
+                  backgroundColor: theme.colors.background,
+                  fontSize: '1rem'
+                }}
+              >
             <option value="low">Low - 低</option>
             <option value="medium">Medium - 中</option>
             <option value="high">High - 高</option>
             <option value="critical">Critical - 緊急</option>
-          </select>
+              </select>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '500',
+                color: theme.colors.textPrimary
+              }}>
+                発生日時
+              </label>
+              <input
+                type="datetime-local"
+                value={occurred_at}
+                onChange={(e) => setOccurred_at(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: `1px solid ${theme.colors.border}`,
+                  borderRadius: theme.borderRadius.small,
+                  backgroundColor: theme.colors.background,
+                  fontSize: '1rem'
+                }}
+              />
+            </div>
+            
+            <button 
+              type="submit" 
+              style={buttonStyles.primary}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme.colors.secondaryHover;
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = theme.shadows.button;
+                addShineEffect(e.currentTarget);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = theme.colors.secondary;
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = theme.shadows.default;
+              }}
+            >
+              ✨ インシデントを作成
+            </button>
+          </form>
+          
+          {message && (
+            <div style={{
+              marginTop: '1.5rem',
+              padding: '1rem',
+              backgroundColor: message.includes('作成されました') ? '#f0fdf4' : '#fee2e2',
+              color: message.includes('作成されました') ? '#16a34a' : '#dc2626',
+              border: `1px solid ${message.includes('作成されました') ? '#86efac' : '#fca5a5'}`,
+              borderRadius: theme.borderRadius.small
+            }}>
+              {message}
+            </div>
+          )}
         </div>
-        
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-            発生日時
-          </label>
-          <input
-            type="datetime-local"
-            value={occurred_at}
-            onChange={(e) => setOccurred_at(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #ccc',
-              borderRadius: '4px'
-            }}
-          />
-        </div>
-        
-        <button 
-          type="submit" 
-          style={{
-            padding: '0.75rem 1.5rem',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontWeight: 'bold'
-          }}
-        >
-          インシデントを作成
-        </button>
-      </form>
-      
-      {message && (
-        <div style={{
-          marginTop: '1.5rem',
-          padding: '1rem',
-          backgroundColor: message.includes('作成されました') ? '#d4edda' : '#f8d7da',
-          color: message.includes('作成されました') ? '#155724' : '#721c24',
-          border: `1px solid ${message.includes('作成されました') ? '#c3e6cb' : '#f5c6cb'}`,
-          borderRadius: '4px'
-        }}>
-          {message}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

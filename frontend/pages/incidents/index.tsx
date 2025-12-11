@@ -36,7 +36,7 @@ export default function IncidentList() {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: '#f8f9fa',
+      backgroundColor: '#e5e7eb',
       padding: '2rem'
     }}>
       {/* ヘッダー */}
@@ -59,19 +59,19 @@ export default function IncidentList() {
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* ページタイトル */}
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: '#d1d5db',
           padding: '2rem',
           borderRadius: '8px',
           marginBottom: '2rem',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          border: '1px solid #dee2e6'
+          border: '1px solid #9ca3af'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h1 style={{
                 fontSize: '2rem',
                 fontWeight: 'bold',
-                color: '#20b2aa',
+                color: '#495057',
                 margin: 0
               }}>
                 📋 インシデント一覧
@@ -83,7 +83,7 @@ export default function IncidentList() {
             <button
               onClick={() => router.push('/incidents/new')}
               style={{
-                backgroundColor: '#20b2aa',
+                backgroundColor: '#1e3a8a',
                 color: 'white',
                 border: 'none',
                 padding: '0.75rem 1.5rem',
@@ -97,7 +97,7 @@ export default function IncidentList() {
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#1a9a94';
+                e.target.style.backgroundColor = '#1e40af';
                 e.target.style.transform = 'translateY(-2px)';
                 e.target.style.boxShadow = '0 4px 12px rgba(32, 178, 170, 0.3)';
                 // メタリック光沢効果
@@ -116,7 +116,7 @@ export default function IncidentList() {
                 setTimeout(() => e.target.removeChild(shine), 500);
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#20b2aa';
+                e.target.style.backgroundColor = '#1e3a8a';
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
               }}
@@ -130,12 +130,12 @@ export default function IncidentList() {
         <div style={{ marginBottom: '2rem' }}>
           {incidents.length === 0 ? (
             <div style={{
-              backgroundColor: 'white',
+              backgroundColor: '#d1d5db',
               borderRadius: '8px',
               padding: '4rem 2rem',
               textAlign: 'center',
               boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              border: '1px solid #dee2e6'
+              border: '1px solid #9ca3af'
             }}>
               <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📋</div>
               <h3 style={{ color: '#495057', fontSize: '1.5rem', margin: 0 }}>
@@ -158,12 +158,12 @@ export default function IncidentList() {
                     key={inc.id}
                     onClick={() => router.push(`/incidents/${inc.id}`)}
                     style={{
-                      backgroundColor: 'white',
+                      backgroundColor: '#d1d5db',
                       borderRadius: '8px',
                       padding: '1.25rem',
                       cursor: 'pointer',
                       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      border: '1px solid #dee2e6',
+                      border: '1px solid #9ca3af',
                       transition: 'all 0.3s ease',
                       display: 'flex',
                       alignItems: 'center',
@@ -173,7 +173,7 @@ export default function IncidentList() {
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.boxShadow = '0 8px 16px rgba(32, 178, 170, 0.15)';
-                      e.currentTarget.style.backgroundColor = '#f8f9fa';
+                      e.currentTarget.style.backgroundColor = '#e5e7eb';
                       e.currentTarget.style.transform = 'translateY(-2px)';
                       e.currentTarget.style.borderColor = '#20b2aa';
                       // メタリック光沢効果
@@ -198,15 +198,15 @@ export default function IncidentList() {
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.backgroundColor = '#d1d5db';
                       e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.borderColor = '#dee2e6';
+                      e.currentTarget.style.borderColor = '#9ca3af';
                     }}
                   >
                     {/* ID バッジ */}
                     <div 
                       style={{
-                        backgroundColor: '#20b2aa',
+                        backgroundColor: '#1e3a8a',
                         color: 'white',
                         padding: '0.5rem 1rem',
                         borderRadius: '6px',
@@ -297,7 +297,7 @@ export default function IncidentList() {
 
         {/* ページネーション */}
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: '#d1d5db',
           borderRadius: '8px',
           padding: '1.5rem',
           display: 'flex',
@@ -305,7 +305,7 @@ export default function IncidentList() {
           alignItems: 'center',
           gap: '1rem',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          border: '1px solid #dee2e6'
+          border: '1px solid #9ca3af'
         }}>
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -325,7 +325,7 @@ export default function IncidentList() {
           </button>
           
           <div style={{
-            backgroundColor: '#20b2aa',
+            backgroundColor: '#1e3a8a',
             color: 'white',
             padding: '0.5rem 1rem',
             borderRadius: '6px',
