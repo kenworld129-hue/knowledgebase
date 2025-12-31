@@ -1,5 +1,12 @@
 # CLAUDE.md
 
+## Language Rule (Important)
+
+This repository is operated in Japanese.
+
+- All explanations, design discussions, and answers must be written in **Japanese**.
+- Do not provide English explanations unless the user explicitly asks for English.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
