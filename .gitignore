@@ -7,6 +7,8 @@
 .env.development.local
 .env.production.local
 .env.test.local
+.env.development
+.env.production
 
 # Logs
 *.log
@@ -17,6 +19,8 @@ frontend/node_modules/
 frontend/.next/
 frontend/out/
 frontend/.vercel/
+frontend/.env.development
+frontend/.env.production
 
 #=== Backend (Rust) ===#
 backend/target/
